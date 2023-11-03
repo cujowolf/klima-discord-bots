@@ -5,7 +5,7 @@ from discord.ext import commands
 import json
 from web3 import Web3
 
-from .constants import KLIMA_PROTOCOL_SUBGRAPH
+from .constants import KLIMA_PROTOCOL_SUBGRAPH, POLYGON_DIGITAL_CARBON_SUBGRAPH
 
 PROVIDER_POLYGON_URL = os.environ['WEB3_PROVIDER_POLYGON_URL']
 PROVIDER_ETH_URL = os.environ['WEB3_PROVIDER_ETH_URL']
@@ -93,6 +93,15 @@ def get_last_metric(sg):
     )
 
     return last_metric
+
+def get_last_carbon(sg):
+    kpm = sg.load_subgraph(POLYGON_DIGITAL_CARBON_SUBGRAPH)
+
+    last_carbon = kpm.Query.epoches(
+        orderBy=kpm.Epoch.epoch, orderDirection='desc', first=1
+    )
+
+    return last_carbon
 
 
 def prettify_number(number):
