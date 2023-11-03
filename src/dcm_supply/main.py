@@ -74,11 +74,11 @@ async def update_info():
     ):
         sma_percent = carbon_sma / credit_supply
         # ie, annualized reward %
-        target_akr = math.pow(1 + sma_percent, 365 * rebases_per_day) - 1
+        supply_change_annual = math.pow(1 + sma_percent, 365 * rebases_per_day) - 1
     else:
         return
 
-    yield_text = f"{target_akr*100:,.2f}% DCM Supply"
+    yield_text = f"{supply_change_annual*100:,.2f}% DCM Supply"
     print(yield_text)
 
     success = await update_nickname(client, yield_text)
